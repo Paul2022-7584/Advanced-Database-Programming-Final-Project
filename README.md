@@ -1,10 +1,24 @@
-# SQL Server Database Programming Case Study
+# SQL Server Database Programming — Completed Course Project
 
-A coursework-based SQL portfolio covering retail reporting and a small download-tracking schema. The repository contains T-SQL for joining business entities, calculating sales totals, identifying missing relationships, modifying data, and defining tables, keys, and indexes.
+My completed CSIS 332 database programming coursework submission, covering retail reporting and a small download-tracking schema. This repository is intended for readers to download, inspect, and work through in SQL Server using the included solutions and exercise instructions. The repository contains T-SQL for joining business entities, calculating sales totals, identifying missing relationships, modifying data, and defining tables, keys, and indexes.
 
-**Outcome:** a chapter-organized [SQL implementation collection](Queries) and four ERD files. The strongest evidence is the submitted SQL itself; execution results and complete exercise correctness have not been verified.
+**Deliverables:** chapter-organized [SQL solutions](Queries), four ERD files, and the [complete setup and exercise guide](EXERCISE_GUIDE.md).
 
 **Context:** CSIS 332 final project, based on *Murach's SQL Server 2019 for Developers*, My Guitar Shop exercises, October 2022. The retail database and exercise requirements come from the course/textbook. This case study describes the SQL and design artifacts committed here, without claiming an original retail application or production deployment.
+
+## Download, set up, and test
+
+The [full exercise guide](EXERCISE_GUIDE.md) preserves the original instructions, expected tasks, and chapter-by-chapter workflow. Start there when following the project in detail.
+
+1. Download this repository using **Code → Download ZIP** on GitHub and extract it, or clone the repository.
+2. Install SQL Server and SQL Server Management Studio (SSMS). The coursework targets the SQL Server 2019 textbook environment; the exact originally installed versions need confirmation.
+3. Obtain the My Guitar Shop starter files from the course/textbook resources referenced in the guide. In particular, `CreateMyGuitarShop.sql` is an external prerequisite and is not bundled in this repository.
+4. In SSMS, connect to your SQL Server instance, open `CreateMyGuitarShop.sql`, and execute it. Refresh Object Explorer and confirm that `MyGuitarShop` and its tables appear.
+5. Open [Queries](Queries) as a text file. Match its chapter and step labels to the [guide](EXERCISE_GUIDE.md), copy the relevant SQL into an SSMS query window, select `MyGuitarShop` as the database, and execute each exercise separately. Exclude the plain-text chapter headings. Some exercises deliberately produce errors.
+6. Compare returned columns, filters, sorting, and totals with the exercise requirements. After inserts, updates, or deletes, use a `SELECT` query to inspect the affected rows. The guide explains when to rerun the starter script to restore the retail dataset.
+7. For the download-tracking exercises, create and select a separate database named `MyWebDB`. Follow chapters 10–12 in the guide. Chapters 11 and 12 contain alternative table-creation approaches; use a fresh database for each approach to avoid existing-table conflicts.
+
+Run the data-changing and database-reset exercises in a practice environment. The submission is organized for step-by-step execution, rather than execution of the entire `Queries` file as one batch.
 
 ## Technologies
 
@@ -34,9 +48,9 @@ The ERD filenames are retained as submitted. The architecture summary above foll
 | **Data types and functions** | `CAST`, `CONVERT`, `ROUND`, date arithmetic, shipping-duration calculations, and last-four-digit display formatting (chapters 8–9). |
 | **Schema definition** | Users, Products, and Downloads tables; primary and foreign keys; ZIP-code and foreign-key indexes; defaults; and an `ALTER COLUMN` constraint exercise (chapter 11). Chapter 12 contains a separate table-definition variant. |
 
-## Validation and known gaps
+## Validation and review notes
 
-**Review status:** repository contents were inspected; SQL was not executed against SQL Server. No result screenshots, automated tests, or execution logs are committed. The following are static-review findings, not observed runtime results.
+**Submission status:** the author identifies this as a completed coursework submission. **Independent review status:** the documentation review inspected the committed SQL but did not rerun it in SQL Server. These are separate statuses. No result screenshots, automated tests, or execution logs are committed; the findings below concern the SQL text, not a judgment about whether the coursework was submitted.
 
 - **Order counts:** chapter 5, steps 4–5 count order IDs after joining to line items, so an order with several items can be counted several times. Validate using `COUNT(DISTINCT o.OrderID)` when measuring orders.
 - **Oldest order:** chapter 6, step 6 correlates the minimum date by `OrderID` instead of customer. Correlate by `CustomerID` and define how tied dates should be handled.
@@ -44,24 +58,20 @@ The ERD filenames are retained as submitted. The architecture summary above foll
 - **Schema coverage:** chapter 11 permits null email and last-name values despite the requirements. Chapter 12 declares neither identity columns nor unique email/product-name indexes, and omits the requested download-date and foreign-key indexes in that variant.
 - **Execution boundaries:** `Queries` contains plain-text chapter headings, an intentional invalid-column exercise, data-changing statements, and alternative table definitions. It is an exercise collection rather than a single runnable deployment script.
 
-**Validation still needed:** execute individual exercises in disposable databases; compare results with expected rows and totals; test foreign-key, null, length, and uniqueness behavior; and retain outputs. No fixes or successful test outcomes are claimed here.
+**To independently verify the example:** follow the setup steps above, compare exercise outputs with the guide, and test foreign-key, null, length, and uniqueness behavior. The review findings have not been corrected or runtime-tested as part of this documentation update.
 
-## Reproduction and limitations
+## Scope and limitations
 
-1. Obtain the course/textbook My Guitar Shop starter files, including `CreateMyGuitarShop.sql`; they are referenced by the original guide but are not included here.
-2. Use a disposable SQL Server environment and SSMS. Initialize the supplied retail database before running its exercises.
-3. Copy individual SQL blocks from `Queries`, excluding chapter headings. Run the MyWebDB work separately from MyGuitarShop and review the alternative chapter 11–12 definitions before creating tables.
+The starter retail database is supplied through the course/textbook resources. Downloading this repository alone does not provide that external setup script. The committed SQL and ERD files document the coursework implementation; the repository does not include an application layer, performance benchmarks, or production deployment evidence.
 
-The repository does not establish performance improvements, production scale, deployment, or full completion of every requirement. Index statements demonstrate index creation, with no query-plan or timing evidence. Password updates and card-number formatting are textbook exercises; they do not demonstrate secure authentication or payment-data protection.
-
-The [original exercise guide](https://github.com/Paul2022-7584/Advanced-Database-Programming-Final-Project/blob/de609810b4c56570c2550a11b3a392daba74e94f/README.md) remains available in project history.
+Index statements demonstrate index creation, with no query-plan or timing evidence. Password updates and card-number formatting are textbook exercises; they do not demonstrate secure authentication or payment-data protection.
 
 ## Resume-ready accomplishments
 
-These statements describe committed artifacts, without claiming validated execution or business impact:
+These statements describe the completed coursework and committed implementation:
 
 - Developed T-SQL coursework queries for a retail database using multi-table joins, aggregate reporting, subqueries, and discount-adjusted sales calculations.
 - Defined a three-table download-tracking schema in SQL with primary and foreign keys, supporting indexes, defaults, and column-constraint changes.
 - Applied SQL Server data conversions, string functions, and date arithmetic to pricing, shipment, and display-formatting exercises.
 
-**Needs confirmation before stronger claims:** personal authorship versus supplied solution code; which exercises were successfully executed; availability of the original submission/screenshots; final ERD accuracy; and any later corrections or measured outcomes.
+**Additional details to confirm:** exact SQL Server/SSMS versions, availability of the original execution screenshots, final ERD accuracy, and any later corrections or measured outcomes.
